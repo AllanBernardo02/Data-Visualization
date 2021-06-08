@@ -90,10 +90,8 @@ with map1:
   if st.sidebar.checkbox('Show Data Preprocess'):
     #st.title("Data Preprocess (Cleaning & Transformation)") 
     st.markdown("<h1 style='text-align: center; font-size: 30px; color: white;'>Data Preprocess (Cleaning & Transformation)</h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: justify; font-size: 20px; color: black;'></h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: justify; font-size: 20px; color: black;'></h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: justify; font-size: 20px; color: black;'></h1>", unsafe_allow_html=True)
-    st.markdown("<h1 style='text-align: justify; font-size: 20px; color: black;'></h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Our dataset is in CSV Format provided by USGS on their website. Data in GEOJSON format contains a lot of data that can be confusing for human reading. But we familiarize ourselves and managed to get the necessary data to be used for our graphs. We encountered some errors when using the data because of anomalies in it such as negative values. We performed data cleaning manually by converting the negative values into absolute values. That means converting any negative values into positive so that data will go through our graph without throwing an error.</p>", unsafe_allow_html=True)
+
 
   if st.sidebar.checkbox('Show Data Visualization'):
     st.title("Data Visualization & Analysis/Insights")
