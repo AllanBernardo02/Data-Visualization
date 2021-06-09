@@ -5,66 +5,97 @@ from PIL import Image #PIL is the Python Imaging Library which provides the pyth
 
 
 
-#
+#   for this line of code, we used st.markdown to display the text on our interactive webpage with emoji.
+#   because you can use it to flexibly insert rich content into your application.
 st.markdown("""# :point_right: :earth_americas: Global Earthquake Magnitude Perspective/report :earth_asia: :point_left:""")
 
-
+#   Start in line 14 to line 21, we use ops dictionaries to assigns the datasets contained in curly braces with keys such as Past 30 days
+#   Past 7 Days, Past Days and especially the Top20 Eq in the world.
 ops = {
-    'Past 30 Days':'significant_month (2).csv',
-  "Past 7 Days" : 'all_week (2).csv',
-  "Past days": 'all_day (3).csv'
+    'Past 30 Days':'significant_month (2).csv', # This datasets contained data about earthquake for the Past 30 days.
+  "Past 7 Days" : 'all_week (2).csv',           # This datasets contained data about earthquake for the Past 7 days.
+  "Past days": 'all_day (3).csv'                # This datasets contained data about earthquake for the Past days.
 }
 ops1 = {
-    'Top20 EarthQuake in the World':'top20.csv'
-}
+    'Top20 EarthQuake in the World':'top20.csv' # This datasets contained data about Largest earthquake ocurred for the Past day, week,
+}                                               # month, year and decade.
 
 
-slider = st.sidebar
-map1= st.beta_container()
-slider1 = st.sidebar
-map2= st.beta_container()
+slider = st.sidebar         #  For this line of code, we used slider and st.sidebar. means all widgets in slider is placed in a left panel slider.
+map1= st.beta_container()   #  For this line of code, we use map1 as a variable name to assign that the map1 is a beta_container
+                            #  that helps you organize your app.
 
+slider1 = st.sidebar        # Same explanation for line 24 :)
+map2= st.beta_container()   # Same explanation for line 25 :)
 
-def tap(dta):
-  df = pd.read_csv(dta)
+# Start in line 37 to 47. All of this code is about ops dictionaries with keys such as past 30 days, past week and day in line 14.
+def tap(dta):  # This line of code is already function, because def is the keyword for defining a function. function def followed 
+               # by the function name which is tap to hold all data in function def and parameters which is the dta to hold na data included 
+               # in a csv then assign it to a dataframe or df for short.
+
+  df = pd.read_csv(dta)  # this line of code, we use df to hold the csv file in ops dictionaries line 14 with parameters dta.
   fig = px.scatter_geo(df, lat='latitude', lon='longitude', 
                           hover_name="place", hover_data=["magnitude", "type", "time"], color='magnitude', color_continuous_scale="Rainbow", 
-                          size='magnitude')
+                          size='magnitude') # for this line of code, we use fig to hold all data in px.scatter_geo. Lets start about px,
+                                            # px is high-level API for creating figures then scattergeo which can be used to control
+                                            # the appearance of the base map onto which data is plotted. So that, px.scatter_geo is function
+                                            # for a geographical scatter plot. The size argument is used to set the size of markers from a 
+                                            # given column of the DataFrame. latitude, longitude, magnitude  can be seen in the csv file 
+                                            # and they are all visible in the interactive map.
 
-  st.plotly_chart(fig)
+  st.plotly_chart(fig)  # for this line of code, after we assign all fields in a fig, line 37. We use now st.plotly_chart To show Plotly chart 
+                        # in Streamlit with fig variable. But all this like parameters, fields and the scattergeo to plot the fields are in 
+                        # the function name which is tap for easy to call.
 
 
-def lap(dta1):
-  dff = pd.read_csv(dta1)
+def lap(dta1): # This line of code is already function, because def is the keyword for defining a function. function def followed 
+               # by the function name which is lap to hold all data in function def and parameters which is the dta1 to hold na data included 
+               # in a csv then assign it to a dataframe or df for short.
+  dff = pd.read_csv(dta1)  # this line of code, we use dff to hold the csv file in ops1 dictionaries line 19 with parameters dta1.
   fig1 = px.scatter_geo(dff, lat='latitude', lon='longitude', 
                           hover_name="place", hover_data=["magnitude", "Date", "Top"], color='magnitude', color_continuous_scale="Rainbow", 
-                          size='magnitude')
-  st.plotly_chart(fig1)
+                          size='magnitude') # for this line of code, we use fig1 to hold all data in px.scatter_geo. Lets start about px,
+                                            # px is high-level API for creating figures then scattergeo which can be used to control
+                                            # the appearance of the base map onto which data is plotted. So that, px.scatter_geo is function
+                                            # for a geographical scatter plot. The size argument is used to set the size of markers from a 
+                                            # given column of the DataFrame. latitude, longitude, magnitude  can be seen in the csv file 
+                                            # and they are all visible in the interactive map.
+
+  st.plotly_chart(fig1)# for this line of code, after we assign all fields in a fig1, line 55. We use now st.plotly_chart To show Plotly chart 
+                       # in Streamlit with fig1 variable. But all this like parameters, fields and the scattergeo to plot the fields are in  
+                       # the function name which is lap for easy to call.
 
 
 
 
-with slider:
-  #image = Image.open('eqq.jpg')
-  image = Image.open('yellow.png')
-  st.image(image)
-  st.markdown("""## User Input Features :mag_right:""")
-  select = st.sidebar.selectbox('Choose the Significant EarthQuake', options = list(ops.keys()), index = 0)
-  tx = '{}'.format(ops[select])
+with slider: # This line of code, we use with statement to exception handling to make the code cleaner and much more readable.
+             # The content for the slider will start with a colon. The first line After colon  is the first one that can be seen 
+             # in the slider panel/bar.
+  image = Image.open('yellow.png') # This line of code, we use image name to hold the Image from the file
+  st.image(image)  # This code is about to display the image with name and type 'yellow.png'.
+  st.markdown("""## User Input Features :mag_right:""") # This code is about to display the text before the selectbox that placed in a sidebar
+  select = st.sidebar.selectbox('Choose the Significant EarthQuake', options = list(ops.keys()), index = 0) # This line of code, we use 
+                  # select name to hold all list and keys from ops dictionary with caption name 'Choose the...' then indicate to index = 0
+                  # to show the first keys in the selectbox that placed in ops dictionary which is the 'Past 30 days'
+  tx = '{}'.format(ops[select]) # for this line of code, we use tx to hold dataset specified in ops dictionary '{}' with format specified 
+                                # in select name in line 77. We use it to be much more organize. 
 
-with slider1:
-  select1 = st.sidebar.selectbox('Choose', options = list(ops1.keys()), index = 0)
-  tx1 = '{}'.format(ops1[select1])
+with slider1: # This line of code, we use another slider which is slider1 to create another selectbox for the datasets Top20 EQ in the world.
+  select1 = st.sidebar.selectbox('Choose', options = list(ops1.keys()), index = 0) # This line of code, we use 
+                  # select1 name to hold all list and keys from ops1 dictionary with caption name 'Choose' then indicate to index = 0
+                  # to show the first keys in the selectbox that placed in ops dictionary which is the 'Top20 EarthQuake'
+  tx1 = '{}'.format(ops1[select1]) # for this line of code, we use tx1 to hold dataset specified in ops1 dictionary '{}' with format specified 
+                                # in select name in line 84. We use it to be much more organize. 
  
 
- 
 
-
-#st.markdown("<h1 style='text-align: justify; font-size: 20px; color: black;'></h1>", unsafe_allow_html=True)
-
-with map1:
+with map1: # For this line of code, we use with statement again to help be more organize your content.
+  # In line 95, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+  # you will see all the content which is all st.markdown, meaning the condition is true.
   if st.sidebar.checkbox('Show Introduction to the Problem/Research'):
-    #st.title("INTRODUCTION TO THE PROBLEM/Research")
+
+    # Start in line 99 to line 110, it’s all about the Introduction. We use st.markdown to display all the content for the introduction 
+    # and to change the style of the text because st.markdown is the only tool for custom HTML within a streamlit app that you can edit text.
     st.markdown("<h1 style='text-align: center; font-size: 30px; color: white;'>INTRODUCTION TO THE PROBLEM/Research</h1>", unsafe_allow_html=True)
     st.markdown("<h1 style='text-align: justify; font-size: 20px; color: white;'>1.1 Background of the Study</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-family:Avantgarde; font-size: 20px; color: white;'>Geologic mapping is a highly interpretive, scientific process that can produce a range of map products for many different uses, including assessing ground-water quality and contamination risks; predicting earthquake, volcano, and landslide hazards; characterizing energy and mineral resources and their extraction costs; waste repository siting; land management and land-use planning; and general education.</p>", unsafe_allow_html=True)
@@ -77,23 +108,35 @@ with map1:
     st.markdown("<h1 style='text-align: justify; font-size: 20px; color: white;'>1.2 Problem Statement </h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Citizens, emergency responders, and engineers rely on the USGS for accurate and timely information on where an earthquake occurred, how much the ground shook in different locations, the expected economic and human impacts, and what the likelihood is of future significant ground shaking.</p>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Citizens, emergency responders, and engineers rely on the USGS for accurate and timely information on where an earthquake occurred, how much the ground shook in different locations, the expected economic and human impacts, and what the likelihood is of future significant ground shaking.</p>", unsafe_allow_html=True)
-    
+  
+  # In line 114, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+  # you will see all the content which is all st.markdown, meaning the condition is true.
+  if st.sidebar.checkbox('Show Description of the Data'): 
 
-  if st.sidebar.checkbox('Show Description of the Data'):
-    #st.title("Description of the Data")
+    # Start in line 118 to line 122, it’s all about the Description_data. We use st.markdown to display all the content in the description 
+    # and to change the style of the text because st.markdown is the only tool for custom HTML within a streamlit app that you can edit text.
     st.markdown("<h1 style='text-align: center; font-size: 30px; color: white;'>Description of the Data</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>The researchers have gathered the data at the United States Geological Survey’s website. The United States Geological Survey estimates that several million earthquakes occur worldwide each year.  The USGS currently records roughly 50 earthquakes each day, for a total of 20,000 each year.</p>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Seismographs are equipment that record earthquakes. A seismogram is the name for the recording they produce. A hefty weight swings free from the seismograph's base, which is securely planted in the ground. The Advanced National Seismic System (ANSS), which is around 40% complete, is helping the USGS enhance its earthquake monitoring and reporting capabilities. Using the data gathered, they discovered that a seismographic network is used to record earthquakes. </p>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>The movement of the earth at each seismic station in the network is measured. In an earthquake, the movement of one block of rock over another release’s energy, causing the ground to tremble. The most frequent way of determining the size of an earthquake is to use its magnitude. The strong motion data acquired by USGS stations during large earthquakes are documented in Earthquake Data Reports. Earthquake Data from the USGS Earthquakes Hazards Program (EHP) provides a downloadable data in CSV file on global earthquakes for the last 7 days and highlights the history of earthquake occurrences around the world. </p>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Earthquakes are represented on maps with links to data including latitude, longitude, magnitude, and time. Symbols representing earthquakes are varied in size, representing magnitude, and in color, representing time of earthquake occurrence (within the last hour, the last 24 hours, or the last 7 days). The site also provides general trends, interesting facts or trivia about earthquakes, documentation of the largest earthquakes to ever occur specifically the Top 20 largest earthquakes in the World. </p>", unsafe_allow_html=True)
 
+  # In line 126, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+  # you will see all the content which is all st.markdown, meaning the condition is true.
   if st.sidebar.checkbox('Show Data Preprocess'):
-    #st.title("Data Preprocess (Cleaning & Transformation)") 
+
+    # In line 130 to line 131, it’s all about the Data Preprocess. We use st.markdown to display all the content in the Data Preprocess 
+    # and to change the style of the text because st.markdown is the only tool for custom HTML within a streamlit app that you can edit text.
     st.markdown("<h1 style='text-align: center; font-size: 30px; color: white;'>Data Preprocess (Cleaning & Transformation)</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Our dataset is in CSV Format provided by USGS on their website. Data in GEOJSON format contains a lot of data that can be confusing for human reading. But we familiarize ourselves and managed to get the necessary data to be used for our graphs. We encountered some errors when using the data because of anomalies in it such as negative values. We performed data cleaning manually by converting the negative values into absolute values. That means converting any negative values into positive so that data will go through our graph without throwing an error.</p>", unsafe_allow_html=True)
 
-
+  # In line 135, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+  # you will see all the content which is all st.markdown, meaning the condition is true.
   if st.sidebar.checkbox('Show Data Visualization'):
+
+    # In line 140 to line 159, it’s all about the Data Visualization. We use st.title, st.markdown to display all the content in the Data 
+    # Visualization and to change the style of the text because st.markdown is the only tool for custom HTML within a streamlit app that you
+    # can edit text. Next is image1 and image2 to hold and show the image form the file with name and type.
     st.title("Data Visualization & Analysis/Insights")
     st.markdown("<h1 style='text-align: justify; font-size: 20px; color: white;'>Data Visualization</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>As we all know, Earthquakes are clustered along fault lines. Showing the quantity and magnitude of earthquakes cumulatively over time is a challenge due to visual overlap. In our Data Visulation shows all the continents where an earthquake has occurred.</p>", unsafe_allow_html=True)
@@ -107,20 +150,34 @@ with map1:
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Based on our perspective/insights about data visualization there is another country where no earthquake occurred and there is also a country that rarely has an earthquake, Because of inactive faults. Inactive faults are structures that we can identify, but which do no have earthquakes or do not display any seismic activity. Some  countries experience a series of earthquakes or there are always earthquakes, Because Earthquakes are usually caused when rock underground suddenly breaks along a fault. This sudden release of energy causes the seismic waves that make the ground shake. The second reason is The Pacific Ring of Fire boasts the world's highest concentration of volcanoes, as well as 90 percent of the planet's earthquakes that cause triggering frequent seismic and volcanic activity. In Palawan there has been no earthquake. According to PHIVOLCS, it has no active faults lines, no active volcanoes, and no deep trenches but it is still vulnerable to earthquake hazards.</p>", unsafe_allow_html=True)
 
 
+# In line 155, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+# you will see all the content which is st.markdown, meaning the condition is true.
   if st.sidebar.checkbox('Show Map1'):
     st.markdown("""### Map1 :earth_africa:""")
-    tap(tx)
+    tap(tx)  # for this line of code, This is a final to show the map, because we called the function name tap. because with the function 
+             # name tap, this is where the plotting of the fields on our map with the help of plotly and scattergeo happens
+             # and for the tx, here is how to format the selection in our selectbox and usually use index = 0 to show the first keys 
+             # listed in the ops dictionary in line 14 :).
 
 
-with map2:
+with map2: # For this line of code, we use with statement again to help be more organize your content.
+  # In line 167, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+  # you will see all the content which is all st.markdown, meaning the condition is true.
 
   if st.sidebar.checkbox('Show Map2'):
-    st.markdown("""### Top20 Largest EarthQuakes in the World :earth_africa:""",True)
+    st.markdown("""### Top20 Largest EarthQuakes in the World :earth_africa:""")
     st.markdown("""### Map2 :earth_africa:""")
-    lap(tx1)
+    lap(tx1) # for this line of code, This is a final to show the map2, because we called the function name lap. because with the function 
+             # name lap, this is where the plotting of the fields on our map with the help of plotly and scattergeo happens
+             # and for the tx1, here is how to format the selection in our selectbox and usually use index = 0 to show the first keys 
+             # listed in the ops dictionary in line 19 :).
 
+  # In line 177, we use if statement for st.sidebar.checkbox() to know if the condition is true. if you check the checkbox then,
+  # you will see all the content which is st.markdown, meaning the condition is true.
   if st.sidebar.checkbox('Show Recommendation & Insights'):
-    #st.title("Recommendation / /Action Points based on the Insights")
+    
+    # Start in line 181 to line 192, it’s all about the Recommendation. We use st.markdown to display all the content in the description 
+    # and to change the style of the text because st.markdown is the only tool for custom HTML within a streamlit app that you can edit text.
     st.markdown("<h1 style='text-align: center; font-size: 30px; color: white;'>Recommendation/Action Points based on the Insights</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>The aims of the study can be restated as follows:     •	To examine the existing data made by USGS in the domain of location of earthquakes and count of quakes around the world, to focus on how many quakes and the magnitude and, intensity will happen per month.      •	To Test the findings of the graph gathered in USGS earthquake locator.         •	To spearhead the realistic effort of development and strategies of making data visualization. </p>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: justify; font-size: 20px; color: white;'>Pursuing the aims of the study, the research design had the following major features: Self-administered questionaires distributed to subjects, focus group discussions in accordance with the first aim of the project, the USGS will provide data information for us to collect and create a graph by making its own web program and the graph will provide the information within the month. </p>", unsafe_allow_html=True)
